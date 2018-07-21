@@ -8,10 +8,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundService", "SoundServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundServiceTestApp", "SoundServiceTestApp\SoundServiceTestApp.csproj", "{AD383AFA-BA9E-45FD-B8E9-7CDACE954E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASMR Hexathon", "Unity\Assembly-CSharp.csproj", "{0F911DC4-A156-F009-704F-B3E052E49C29}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASMR Hexathon Editor", "Unity\Assembly-CSharp-Editor.csproj", "{30208C63-F7FE-B199-FE3C-59437FF45CDE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
