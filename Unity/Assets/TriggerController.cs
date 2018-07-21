@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TriggerController : MonoBehaviour 
 {
+    public KeyCode contractKey = KeyCode.Alpha1;
+    public KeyCode expandKey = KeyCode.Alpha2;
+    public KeyCode normalizeKey = KeyCode.Alpha3;
     public GameObject selectedObject;
     private ModelObjectControl selectedObjectControl;
     private Animator selectedObjectAnimator;
@@ -18,17 +21,17 @@ public class TriggerController : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-		if(Input.GetKeyDown(KeyCode.Alpha1))
+		if(Input.GetKeyDown(contractKey))
         {
             //selectedObjectAnimator.SetTrigger("Normalize");
             selectedObjectControl.Contract();
         }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
+        else if(Input.GetKeyDown(expandKey))
         {
             //selectedObjectAnimator.SetTrigger("Expand");
             selectedObjectControl.Expand();
         }
-        else if(Input.GetKeyDown(KeyCode.Alpha3))
+        else if(Input.GetKeyDown(normalizeKey))
         {
             selectedObjectControl.Normalize();
         }
