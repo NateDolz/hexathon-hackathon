@@ -76,9 +76,9 @@ public class TriggerController : MonoBehaviour
                 break;
             case "down": selectedObjectControl.Turn('x', 45f);
                 break;
-            case "right": selectedObjectControl.Turn('y', 45f);
+            case "right": selectedObjectControl.Turn('y', -45f);
                 break;
-            case "left": selectedObjectControl.Turn('y', -45f);
+            case "left": selectedObjectControl.Turn('y', 45f);
                 break;
             case "forward": selectedObjectControl.Turn('x', 45f);
                 break;
