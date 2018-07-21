@@ -8,13 +8,19 @@ public class ModelObjectControl : MonoBehaviour
 {
     public float expansionFactor = 1.5f;
     public float interpolationTime = 0.5f;
+    public float rotationTime = 0.75f;
     
     private Transform objectTransform;
     private Animator animator;
-    private Dictionary<Transform, VectorData> vectorData = null;
     private Dictionary<Transform, Vector3> originalPositions = new Dictionary<Transform, Vector3>();
-    private float timeRemaining;
+    
+    private Dictionary<Transform, VectorData> vectorData = null;
+    private float scaleTimeRemaining;
     private float objectScale = 1.0f;
+
+    private VectorData rotationData = null;
+    private float rotationTimeRemaining;
+ 
 
     public bool IsExpanded { get { return objectScale > 1.0f; } }
 
@@ -30,18 +36,37 @@ public class ModelObjectControl : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (vectorData == null) return;
-
-        timeRemaining -= Time.deltaTime;
-
-        foreach(var kvp in vectorData)
+        if(rotationData != null && rotationTimeRemaining > 0)
         {
-            if (kvp.Value.TravelDistance == 0f) continue;
+            rotationTimeRemaining -= Time.deltaTime;
 
-            kvp.Key.localPosition = Vector3.Lerp(kvp.Value.StartVector, kvp.Value.EndVector, (interpolationTime - timeRemaining) / interpolationTime);
+            Vector3 newVector = Vector3.Lerp(rotationData.StartVector, rotationData.EndVector, (rotationTime - rotationTimeRemaining) / rotationTime);
+            objectTransform.eulerAngles = newVector;
+
+            if (rotationTimeRemaining <= 0f)
+            {
+                rotationData = null;
+                rotationTimeRemaining = 0f;
+            }
         }
 
-        if (timeRemaining <= 0f) vectorData = null;
+        if (vectorData != null && scaleTimeRemaining > 0)
+        {
+            scaleTimeRemaining -= Time.deltaTime;
+
+            foreach (var kvp in vectorData)
+            {
+                if (kvp.Value.TravelDistance == 0f) continue;
+
+                kvp.Key.localPosition = Vector3.Lerp(kvp.Value.StartVector, kvp.Value.EndVector, (interpolationTime - scaleTimeRemaining) / interpolationTime);
+            }
+
+            if (scaleTimeRemaining <= 0f)
+            {
+                vectorData = null;
+                scaleTimeRemaining = 0f;
+            }
+        }
     }
 
     private void AddOriginalPositions(Transform transform)
@@ -53,8 +78,53 @@ public class ModelObjectControl : MonoBehaviour
         }
     }
 
+    #region Rotation
+
+    public void Turn(char axis, float rotationValue)
+    {
+        rotationTimeRemaining += rotationTime;
+        if (rotationData != null)
+        {
+            AppendTurn(axis, rotationValue);
+            return;
+        }
+
+        Vector3 rotationVector = MapRotationValue(axis, rotationValue);
+        rotationData = new VectorData(objectTransform.eulerAngles, objectTransform.eulerAngles + rotationVector);
+    }
+
+    private void AppendTurn(char axis, float rotationValue)
+    {
+        Vector3 rotationVector = MapRotationValue(axis, rotationValue);
+        rotationData = new VectorData(rotationData.StartVector, rotationData.EndVector + rotationVector);
+    }
+
+    private Vector3 MapRotationValue(char axis, float rotationValue)
+    {
+        Vector3 rotationVector = new Vector3();
+        switch (axis)
+        {
+            case 'x':
+                rotationVector.x = rotationValue;
+                break;
+            case 'y':
+                rotationVector.y = rotationValue;
+                break;
+            case 'z':
+                rotationVector.z = rotationValue;
+                break;
+        }
+
+        return rotationVector;
+    }
+
+    #endregion
+
+    #region Expand
+
     public void Expand()
     {
+        scaleTimeRemaining += interpolationTime;
         objectScale *= expansionFactor;
 
         if (vectorData != null)
@@ -62,13 +132,8 @@ public class ModelObjectControl : MonoBehaviour
             AppendExpansion(objectTransform);
             return;
         }
-        else
-        { 
-            vectorData = new Dictionary<Transform, VectorData>();
-        }
 
-        timeRemaining = interpolationTime;
-
+        vectorData = new Dictionary<Transform, VectorData>();
         ApplyExpansion(objectTransform);
     }
 
@@ -89,41 +154,41 @@ public class ModelObjectControl : MonoBehaviour
         {
             tempList.Add(kvp.Key, new VectorData(kvp.Key.localPosition, kvp.Value.EndVector * expansionFactor));
         }
-
-        timeRemaining = interpolationTime;
+        
         vectorData = tempList;
     }
 
-    public void Contract()
+    #endregion
+
+    #region Collapse
+
+    public void Collapse()
     {
         if (objectScale == 1.0f) return;
 
+        scaleTimeRemaining += interpolationTime;
         objectScale /= expansionFactor;
         if (vectorData != null)
         {
-            AppendContraction(objectTransform);
+            AppendCollapse(objectTransform);
             return;
         }
-        else
-        {
-            vectorData = new Dictionary<Transform, VectorData>();
-        }
+        
+        vectorData = new Dictionary<Transform, VectorData>();
 
-        timeRemaining = interpolationTime;
-
-        ApplyContraction(objectTransform);
+        ApplyCollapse(objectTransform);
     }
 
-    private void ApplyContraction(Transform parent)
+    private void ApplyCollapse(Transform parent)
     {
         foreach (Transform child in parent)
         {
-            ApplyContraction(child);
+            ApplyCollapse(child);
             vectorData.Add(child, new VectorData(child.localPosition, child.localPosition / expansionFactor));
         }
     }
 
-    private void AppendContraction(Transform parent)
+    private void AppendCollapse(Transform parent)
     {
         var tempList = new Dictionary<Transform, VectorData>();
 
@@ -131,12 +196,13 @@ public class ModelObjectControl : MonoBehaviour
         {
             tempList.Add(kvp.Key, new VectorData(kvp.Key.localPosition, kvp.Value.EndVector / expansionFactor));
         }
-
-        timeRemaining = interpolationTime;
+        
         vectorData = tempList;
     }
 
-    public void Normalize()
+    #endregion
+
+    public void ResetObject()
     {
         foreach(var kvp in originalPositions)
         {
