@@ -23,6 +23,12 @@ x64/
 x86/
 build/
 bld/
+Unity/Temp
+Unity/Library/ScriptAssemblies/
+Unity/Assets/Resources.Meta
+Unity/Library/EditorInstance.json
+Unity/Library/metadata
+Unity/Library/*.log
 [Bb]in/
 [Oo]bj/
 [Oo]ut/
