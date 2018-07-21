@@ -15,7 +15,6 @@ namespace SoundServiceTestApp
             var streamWriter = new StreamWriter(filePath);
             streamWriter.AutoFlush = true;
 
-<<<<<<< HEAD
             soundService.ShowItem = item =>
             {
                 Console.WriteLine("Show " + item);
@@ -61,7 +60,7 @@ namespace SoundServiceTestApp
                 Console.WriteLine("Stop");
                 streamWriter.WriteLine("Stop");
             };
-=======
+
             soundService.ShowItem = item => streamWriter.WriteLine("Show " + item);
             soundService.RemoveItem = item => streamWriter.WriteLine("Remove " + item);
             soundService.TurnItem = (item , direction) => streamWriter.WriteLine("Turn " + item + " " + direction.ToString());
@@ -71,7 +70,6 @@ namespace SoundServiceTestApp
             soundService.Faster = () => streamWriter.WriteLine("Faster");            
             soundService.Slower = () => streamWriter.WriteLine("Slower");
             soundService.Stop = () => streamWriter.WriteLine("Stop");
->>>>>>> 73b31455ca355befe199af647e761c6ab430a1ff
 
             Console.WriteLine("Start Talking...");
             soundService.KickOffListener();
