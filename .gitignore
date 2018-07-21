@@ -33,3 +33,5 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 Unity/Temp/UnityLockfile
+Unity/Library/ShaderCache.db
+Unity/Library/ShaderCache.db

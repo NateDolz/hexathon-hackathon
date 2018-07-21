@@ -14,10 +14,12 @@ public class ModelObjectControl : MonoBehaviour
     private Dictionary<Transform, VectorData> vectorData = null;
     private Dictionary<Transform, Vector3> originalPositions = new Dictionary<Transform, Vector3>();
     private float timeRemaining;
-    
+    private float objectScale = 1.0f;
 
-	// Use this for initialization
-	void Start () 
+    public bool IsExpanded { get { return objectScale > 1.0f; } }
+
+    // Use this for initialization
+    void Start () 
     {
         objectTransform = gameObject.GetComponent<Transform>();
         animator = gameObject.GetComponent<Animator>();
@@ -32,14 +34,14 @@ public class ModelObjectControl : MonoBehaviour
 
         timeRemaining -= Time.deltaTime;
 
-        foreach(var keyValuePair in vectorData)
+        foreach(var kvp in vectorData)
         {
-            if (keyValuePair.Value.TravelDistance == 0) continue;
+            if (kvp.Value.TravelDistance == 0f) continue;
 
-            keyValuePair.Key.localPosition = Vector3.Lerp(keyValuePair.Value.StartVector, keyValuePair.Value.EndVector, (interpolationTime - timeRemaining) / interpolationTime);
+            kvp.Key.localPosition = Vector3.Lerp(kvp.Value.StartVector, kvp.Value.EndVector, (interpolationTime - timeRemaining) / interpolationTime);
         }
 
-        if (timeRemaining <= 0) vectorData = null;
+        if (timeRemaining <= 0f) vectorData = null;
     }
 
     private void AddOriginalPositions(Transform transform)
@@ -53,10 +55,18 @@ public class ModelObjectControl : MonoBehaviour
 
     public void Expand()
     {
-        if (vectorData != null) AppendExpansion(objectTransform);
-        else vectorData = new Dictionary<Transform, VectorData>();
+        if (vectorData != null)
+        {
+            AppendExpansion(objectTransform);
+            return;
+        }
+        else
+        { 
+            vectorData = new Dictionary<Transform, VectorData>();
+        }
 
         timeRemaining = interpolationTime;
+        objectScale *= expansionFactor;
 
         ApplyExpansion(objectTransform);
     }
@@ -73,21 +83,31 @@ public class ModelObjectControl : MonoBehaviour
     private void AppendExpansion(Transform parent)
     {
         var tempList = new Dictionary<Transform, VectorData>();
-
-        foreach(var kvp in vectorData)
+        
+        foreach (var kvp in vectorData)
         {
             tempList.Add(kvp.Key, new VectorData(kvp.Key.localPosition, kvp.Value.EndVector * expansionFactor));
         }
 
+        timeRemaining = interpolationTime;
         vectorData = tempList;
     }
 
     public void Contract()
     {
-        if (vectorData != null) AppendContraction(objectTransform);
-        else vectorData = new Dictionary<Transform, VectorData>();
+        if (objectScale == 1.0f) return;
+        if (vectorData != null)
+        {
+            AppendContraction(objectTransform);
+            return;
+        }
+        else
+        {
+            vectorData = new Dictionary<Transform, VectorData>();
+        }
 
         timeRemaining = interpolationTime;
+        objectScale /= expansionFactor;
 
         ApplyContraction(objectTransform);
     }
@@ -110,6 +130,7 @@ public class ModelObjectControl : MonoBehaviour
             tempList.Add(kvp.Key, new VectorData(kvp.Key.localPosition, kvp.Value.EndVector / expansionFactor));
         }
 
+        timeRemaining = interpolationTime;
         vectorData = tempList;
     }
 
@@ -120,6 +141,7 @@ public class ModelObjectControl : MonoBehaviour
             kvp.Key.localPosition = kvp.Value;
         }
 
+        objectScale = 1.0f;
         vectorData = null;
     }
 
