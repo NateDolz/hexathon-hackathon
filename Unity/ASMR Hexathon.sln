@@ -1,6 +1,10 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2010
+
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 14.0.25431.01
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASMR Hexathon", "Assembly-CSharp.csproj", "{0F911DC4-A156-F009-704F-B3E052E49C29}"
 EndProject
 EndProject
