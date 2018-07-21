@@ -1,6 +1,6 @@
 startup: Coverity Desktop Analysis version 8.5.0.5 on Windows 7 Professional, 64-bit, Service Pack 1 (build 7601)
 startup: Internal version numbers: 37b2cdd284 p-kent-push-26368.974
-startup: started at 2018-07-21 13:14:44
+startup: started at 2018-07-21 13:59:19
 startup: command line: D:\cov-analysis-win64-8.5.0\bin\cov-run-desktop.exe --evaluate-configuration-settings-v1 C:\Users\pdspeak\Documents\GitHub\hexathon-hackathon\Unity\.cov\evaluated-coverity.conf --dir C:\Users\pdspeak\Documents\GitHub\hexathon-hackathon\Unity\.cov\evaluate-configuration-idir --code-base-dir C:\Users\pdspeak\Documents\GitHub\hexathon-hackathon\Unity\ --tmpdir C:\Users\pdspeak\AppData\Local\Temp covRunDesktopFileList.utf8.txt
 settings: {
 settings:   "type": "Coverity configuration",
@@ -59,4 +59,4 @@ settings:     },
 settings:     "tmpdir": "C:\\Users\\pdspeak\\AppData\\Local\\Temp"
 settings:   }
 settings: }
-shutdown: cov-run-desktop terminating with code 0 at 2018-07-21 13:14:44
+shutdown: cov-run-desktop terminating with code 0 at 2018-07-21 13:59:19

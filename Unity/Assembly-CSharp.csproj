@@ -58,13 +58,6 @@
      <Compile Include="Assets\Normalize.cs" />
      <Compile Include="Assets\Oculus\Avatar\Samples\GripPoses\Scripts\PoseEditHelper.cs" />
      <Compile Include="Assets\Oculus\Avatar\Samples\RemoteLoopback\Scripts\RemoteLoopbackManager.cs" />
-     <Compile Include="Assets\Oculus\Avatar\Samples\SocialStarter\Assets\Scripts\P2PManager.cs" />
-     <Compile Include="Assets\Oculus\Avatar\Samples\SocialStarter\Assets\Scripts\PlatformManager.cs" />
-     <Compile Include="Assets\Oculus\Avatar\Samples\SocialStarter\Assets\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Oculus\Avatar\Samples\SocialStarter\Assets\Scripts\RemotePlayer.cs" />
-     <Compile Include="Assets\Oculus\Avatar\Samples\SocialStarter\Assets\Scripts\RoomManager.cs" />
-     <Compile Include="Assets\Oculus\Avatar\Samples\SocialStarter\Assets\Scripts\SocialPlatformManager.cs" />
-     <Compile Include="Assets\Oculus\Avatar\Samples\SocialStarter\Assets\Scripts\VoipManager.cs" />
      <Compile Include="Assets\Oculus\Avatar\Scripts\OvrAvatar.cs" />
      <Compile Include="Assets\Oculus\Avatar\Scripts\OvrAvatarAsset.cs" />
      <Compile Include="Assets\Oculus\Avatar\Scripts\OvrAvatarAssetMesh.cs" />
@@ -152,7 +145,6 @@
      <None Include="Assets\Oculus\VR\Resources\Unlit Transparent Color.shader" />
      <None Include="Assets\Oculus\Avatar\Resources\Materials\AvatarSurfaceShaderPBS.shader" />
      <None Include="Assets\Oculus\VR\Resources\OVRMRCameraFrameLit.shader" />
-     <None Include="Assets\Oculus\Avatar\Samples\SocialStarter\README.txt" />
      <None Include="Assets\Oculus\Avatar\Resources\Materials\Version1.5\Avatar_Mobile_CombinedMesh.shader" />
      <None Include="Assets\Oculus\VR\Resources\Underlay Transparent Occluder.shader" />
      <None Include="Assets\Oculus\VR\Resources\Texture2D Blit.shader" />
