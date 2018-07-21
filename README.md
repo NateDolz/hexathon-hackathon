@@ -1,4 +1,4 @@
-#hexathon-hackathon
+# hexathon-hackathon
 
 Team Asynchronous Micro Riot
 
