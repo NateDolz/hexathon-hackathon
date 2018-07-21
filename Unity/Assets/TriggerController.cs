@@ -40,7 +40,7 @@ public class TriggerController : MonoBehaviour
         }
         else if(Input.GetKeyDown(normalizeKey))
         {
-            selectedObjectControl.Normalize();
+            selectedObjectControl.ResetObject();
         }
 
         if (Reader == null || Reader.Peek() == -1) return;
@@ -62,6 +62,8 @@ public class TriggerController : MonoBehaviour
             case "remove": GameObject.Destroy(selectedObject);
                 break;
             case "turn": MapWordToDirection(splitLine[1].ToLower().Trim());
+                break;
+            case "reset": selectedObjectControl.ResetObject();
                 break;
         }
     }
