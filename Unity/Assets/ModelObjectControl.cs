@@ -55,6 +55,8 @@ public class ModelObjectControl : MonoBehaviour
 
     public void Expand()
     {
+        objectScale *= expansionFactor;
+
         if (vectorData != null)
         {
             AppendExpansion(objectTransform);
@@ -66,7 +68,6 @@ public class ModelObjectControl : MonoBehaviour
         }
 
         timeRemaining = interpolationTime;
-        objectScale *= expansionFactor;
 
         ApplyExpansion(objectTransform);
     }
@@ -96,6 +97,8 @@ public class ModelObjectControl : MonoBehaviour
     public void Contract()
     {
         if (objectScale == 1.0f) return;
+
+        objectScale /= expansionFactor;
         if (vectorData != null)
         {
             AppendContraction(objectTransform);
@@ -107,7 +110,6 @@ public class ModelObjectControl : MonoBehaviour
         }
 
         timeRemaining = interpolationTime;
-        objectScale /= expansionFactor;
 
         ApplyContraction(objectTransform);
     }
