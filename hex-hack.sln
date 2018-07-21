@@ -2,8 +2,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 14.0.25431.01
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestureService", "GestureService\GestureService.csproj", "{7D2A7965-26EB-494B-89AB-85B8780F8FF7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundService", "SoundService\SoundService.csproj", "{931C1270-850B-4C1C-A460-2641038AEBBD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundServiceTestApp", "SoundServiceTestApp\SoundServiceTestApp.csproj", "{AD383AFA-BA9E-45FD-B8E9-7CDACE954E3A}"
@@ -18,18 +16,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Debug|x64.Build.0 = Debug|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Debug|x86.Build.0 = Debug|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Release|x64.ActiveCfg = Release|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Release|x64.Build.0 = Release|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Release|x86.ActiveCfg = Release|Any CPU
-		{7D2A7965-26EB-494B-89AB-85B8780F8FF7}.Release|x86.Build.0 = Release|Any CPU
 		{931C1270-850B-4C1C-A460-2641038AEBBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{931C1270-850B-4C1C-A460-2641038AEBBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{931C1270-850B-4C1C-A460-2641038AEBBD}.Debug|x64.ActiveCfg = Debug|Any CPU
