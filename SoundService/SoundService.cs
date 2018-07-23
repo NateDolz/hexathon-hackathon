@@ -73,6 +73,9 @@ namespace SoundService
         public delegate void SlowerDelegate();
         public SlowerDelegate Slower { get; set; }
 
+        public delegate void ResetDelegate();
+        public ResetDelegate Reset { get; set; }
+
         #endregion
 
         #region  Speech Result Processing
@@ -93,7 +96,8 @@ namespace SoundService
             var stopRegex = new Regex(@"(?:^|\W)stop(?:$|\W)");
             var fasterRegex = new Regex(@"(?:^|\W)faster(?:$|\W)");
             var slowerRegex = new Regex(@"(?:^|\W)slower(?:$|\W)");
-            
+            var resetRegex = new Regex(@"(?:^|\W)reset(?:$|\W)");
+
             var showMatch = showRegex.Match(speech);
             var removeMatch = removeRegex.Match(speech);
             var expandMatch = expandRegex.Match(speech);
@@ -103,6 +107,7 @@ namespace SoundService
             var stopMatch = stopRegex.Match(speech);
             var fasterMatch = fasterRegex.Match(speech);
             var slowerMatch = slowerRegex.Match(speech);
+            var resetMatch = resetRegex.Match(speech);
 
             if (showMatch.Success) ShowMatch(speech.Substring(showMatch.Index + showMatch.Length).Trim());
             if (removeMatch.Success) RemoveMatch(speech.Substring(removeMatch.Index + removeMatch.Length).Trim());
@@ -113,6 +118,7 @@ namespace SoundService
             if (stopMatch.Success) Stop();
             if (fasterMatch.Success) Faster();
             if (slowerMatch.Success) Slower();
+            if (resetMatch.Success) Reset();
         }
 
         private void ShowMatch(string speech) => ShowItem(speech.Replace(" ", ""));

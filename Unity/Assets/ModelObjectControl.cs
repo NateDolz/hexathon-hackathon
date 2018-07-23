@@ -4,39 +4,37 @@ using System.Collections.ObjectModel;
 using System;
 using UnityEngine;
 
-public class ModelObjectControl : MonoBehaviour 
+public class ModelObjectControl : MonoBehaviour
 {
     public float expansionFactor = 1.5f;
     public float interpolationTime = 0.5f;
     public float rotationTime = 0.75f;
-    
+
     private Transform objectTransform;
-    private Animator animator;
-    private Dictionary<Transform, Vector3> originalPositions = new Dictionary<Transform, Vector3>();
-    
+    private Dictionary<Transform, TransformVectors> originalPositions = new Dictionary<Transform, TransformVectors>();
+
     private Dictionary<Transform, VectorData> vectorData = null;
     private float scaleTimeRemaining;
     private float objectScale = 1.0f;
 
     private VectorData rotationData = null;
     private float rotationTimeRemaining;
- 
+
 
     public bool IsExpanded { get { return objectScale > 1.0f; } }
 
     // Use this for initialization
-    void Start () 
+    void Start()
     {
         objectTransform = gameObject.GetComponent<Transform>();
-        animator = gameObject.GetComponent<Animator>();
 
         AddOriginalPositions(objectTransform);
     }
-	
-	// Update is called once per frame
-	void Update () 
+
+    // Update is called once per frame
+    void Update()
     {
-        if(rotationData != null && rotationTimeRemaining > 0)
+        if (rotationData != null && rotationTimeRemaining > 0)
         {
             rotationTimeRemaining -= Time.deltaTime;
 
@@ -71,8 +69,8 @@ public class ModelObjectControl : MonoBehaviour
 
     private void AddOriginalPositions(Transform transform)
     {
-        originalPositions.Add(transform, transform.localPosition);
-        foreach(Transform child in transform)
+        originalPositions.Add(transform, new TransformVectors(transform.localPosition, transform.eulerAngles));
+        foreach (Transform child in transform)
         {
             AddOriginalPositions(child);
         }
@@ -149,12 +147,12 @@ public class ModelObjectControl : MonoBehaviour
     private void AppendExpansion(Transform parent)
     {
         var tempList = new Dictionary<Transform, VectorData>();
-        
+
         foreach (var kvp in vectorData)
         {
             tempList.Add(kvp.Key, new VectorData(kvp.Key.localPosition, kvp.Value.EndVector * expansionFactor));
         }
-        
+
         vectorData = tempList;
     }
 
@@ -173,7 +171,7 @@ public class ModelObjectControl : MonoBehaviour
             AppendCollapse(objectTransform);
             return;
         }
-        
+
         vectorData = new Dictionary<Transform, VectorData>();
 
         ApplyCollapse(objectTransform);
@@ -196,7 +194,7 @@ public class ModelObjectControl : MonoBehaviour
         {
             tempList.Add(kvp.Key, new VectorData(kvp.Key.localPosition, kvp.Value.EndVector / expansionFactor));
         }
-        
+
         vectorData = tempList;
     }
 
@@ -204,13 +202,19 @@ public class ModelObjectControl : MonoBehaviour
 
     public void ResetObject()
     {
-        foreach(var kvp in originalPositions)
+        foreach (var kvp in originalPositions)
         {
-            kvp.Key.localPosition = kvp.Value;
+            kvp.Key.localPosition = kvp.Value.PositionVector;
+            kvp.Key.eulerAngles = kvp.Value.RotationVector;
         }
 
         objectScale = 1.0f;
+
         vectorData = null;
+        rotationData = null;
+
+        rotationTimeRemaining = 0f;
+        scaleTimeRemaining = 0f;
     }
 
     private class VectorData
@@ -231,5 +235,20 @@ public class ModelObjectControl : MonoBehaviour
 
         private readonly float travelDistance;
         public float TravelDistance { get { return travelDistance; } }
+    }
+
+    private class TransformVectors
+    {
+        public TransformVectors(Vector3 position, Vector3 rotation)
+        {
+            this.positionVector = position;
+            this.rotationVector = rotation;
+        }
+
+        private readonly Vector3 positionVector;
+        public Vector3 PositionVector { get { return positionVector; } }
+
+        private readonly Vector3 rotationVector;
+        public Vector3 RotationVector { get { return rotationVector; } }
     }
 }

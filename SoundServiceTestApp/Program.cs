@@ -60,6 +60,11 @@ namespace SoundServiceTestApp
                 Console.WriteLine("Stop");
                 streamWriter.WriteLine("Stop");
             };
+            soundService.Reset = () =>
+            {
+                Console.WriteLine("Reset");
+                streamWriter.WriteLine("Reset");
+            };
 
             soundService.ShowItem = item => streamWriter.WriteLine("Show " + item);
             soundService.RemoveItem = item => streamWriter.WriteLine("Remove " + item);
